@@ -1,12 +1,7 @@
-from tkinter import Tk, Label, Button, IntVar, ttk
+from tkinter import Tk, Label, IntVar
 from components.button_pannel import ButtonPanel
 from components.screen import Screen
-from components.logic import Logic
-
-
-# Create method that handle value from buttons
-def handle_click(value):
-    Logic(value)
+from components.Logic.logic import Logic
 
 
 class Calculator:
@@ -14,7 +9,7 @@ class Calculator:
     def __init__(self, master):
         self.master = master
         master.title("Calculator")
-        master.geometry("700x800")
+        master.geometry("250x250")
 
         self.total = 0
         self.raw_first_number = ""
@@ -22,6 +17,10 @@ class Calculator:
         self.int_first_number = 0
         self.int_second_number = 0
         self.operator = ""
+
+        # Create method that handle value from buttons
+        def handle_click(value):
+            Logic(value)
 
         self.label_total = IntVar()
         self.label_total.set(self.total)
