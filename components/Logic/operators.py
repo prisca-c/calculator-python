@@ -16,8 +16,6 @@ class Operators:
         def divide():
             print("divide")
 
-        print(self.value)
-
         if self.value == "+":
             add()
 
