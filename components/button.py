@@ -10,7 +10,7 @@ class ButtonSingle:
             btn.configure(bg="orange")
         btn.configure(width=button_width, height=2)
         btn.columnconfigure(column, weight=1)
-        if value == 0:
+        if value == "0":
             btn.grid(row=row, column=column, columnspan=2)
         else:
             btn.grid(row=row, column=column)
