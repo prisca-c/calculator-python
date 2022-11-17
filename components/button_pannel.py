@@ -5,8 +5,7 @@ from components.button import ButtonSingle
 class ButtonPanel:
 
     #  Create the button's panel
-    def __init__(self, master, handle_click):
-        self.master = master
+    def __init__(self, handle_click):
 
         #  Create each buttons
         ButtonSingle("+", 5, 1, 3, handle_click)

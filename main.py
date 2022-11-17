@@ -6,7 +6,7 @@ from components.logic import Logic
 
 # Create method that handle value from buttons
 def handle_click(value):
-    print(value)
+    Logic(value)
 
 
 class Calculator:
@@ -27,8 +27,8 @@ class Calculator:
         self.label_total.set(self.total)
         self.total_label = Label(master, textvariable=self.label_total)
 
-        self.button_panel = ButtonPanel(master, handle_click)  # Create the button's panel
-        self.screen = Screen(master, self.total)  # Create the screen
+        self.button_panel = ButtonPanel(handle_click)  # Create the button's panel
+        self.screen = Screen(self.total)  # Create the screen
 
 
 root = Tk()
