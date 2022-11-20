@@ -2,9 +2,9 @@ import re
 
 
 class Logic:
-
     #  Define all needed variables to make the calculator work
     total = 0
+    screen = ""
     raw_first_number = ""
     raw_second_number = ""
     int_first_number = 0
@@ -27,10 +27,12 @@ class Logic:
             if Logic.operator == "":
                 Logic.raw_first_number += self.btn_value
                 Logic.int_first_number = float(Logic.raw_first_number)
+                Logic.screen = Logic.raw_first_number
                 print(Logic.raw_first_number + " raw\n" + str(Logic.int_first_number) + " int")
             else:
                 Logic.raw_second_number += self.btn_value
                 Logic.int_second_number = float(Logic.raw_second_number)
+                Logic.screen = Logic.raw_second_number
                 print(Logic.raw_second_number + " raw\n" + str(Logic.int_second_number) + " int")
 
         #  --------------  Special Character  -------------- #
@@ -45,7 +47,9 @@ class Logic:
                 Logic.total = Logic.int_first_number * Logic.int_second_number
             elif Logic.operator == "/":
                 Logic.total = Logic.int_first_number / Logic.int_second_number
+            Logic.screen = Logic.total
             print(Logic.total)
+
         #  Reset all variables
         if self.btn_value == "AC":
             Logic.raw_first_number = ""
@@ -54,13 +58,18 @@ class Logic:
             Logic.int_second_number = 0
             Logic.operator = ""
             Logic.total = 0
+            Logic.screen = 0
             print("Cleared all values")
+
         #  Change the sign of the first number
         if self.btn_value == "+/-":
             if Logic.operator == "":
                 Logic.int_first_number = Logic.int_first_number * -1
+                Logic.screen = Logic.int_first_number
             else:
                 Logic.int_second_number = Logic.int_second_number * -1
+                Logic.screen = Logic.int_second_number
+
         #  Add a decimal point to the first number or the second number
         if self.btn_value == ".":
             if Logic.raw_second_number == "" and Logic.raw_first_number != "":
@@ -69,8 +78,10 @@ class Logic:
             elif Logic.raw_second_number != "":
                 Logic.raw_second_number = Logic.raw_second_number + "."
                 print("Second number: " + Logic.raw_second_number)
+
         #  Get the percentage of the first number to define the second number
         if self.btn_value == "%":
             if Logic.raw_second_number != "":
                 Logic.int_second_number = Logic.int_first_number * (Logic.int_second_number / 100)
                 print("Second number: " + str(Logic.int_second_number))
+

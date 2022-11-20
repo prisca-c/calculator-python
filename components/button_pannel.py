@@ -1,4 +1,3 @@
-from tkinter import Tk, Label, Button, IntVar, ttk
 from components.button import ButtonSingle
 from components.Logic.logic import Logic
 
@@ -6,10 +5,11 @@ from components.Logic.logic import Logic
 class ButtonPanel:
 
     #  Create the button's panel
-    def __init__(self):
+    def __init__(self, handle_screen):
 
         def handle_click(btn_value):
             Logic(btn_value)
+            handle_screen()
 
         #  Create each buttons
         ButtonSingle("+", 1, 3, handle_click)
