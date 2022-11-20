@@ -13,11 +13,7 @@ class Calculator:
 
         self.total = 0
 
-        # Create method that handle value from buttons
-        def handle_click(value):
-            Logic(value)
-
-        self.button_panel = ButtonPanel(handle_click)  # Create the button's panel
+        self.button_panel = ButtonPanel()  # Create the button's panel
         self.screen = Screen(self.total)  # Create the screen
 
 

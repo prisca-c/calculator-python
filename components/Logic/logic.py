@@ -1,63 +1,76 @@
-from components.Logic.operators import Operators
-from components.Logic.numbers import Numbers
 import re
 
 
 class Logic:
 
-    def __init__(self, value):
+    #  Define all needed variables to make the calculator work
+    total = 0
+    raw_first_number = ""
+    raw_second_number = ""
+    int_first_number = 0
+    int_second_number = 0
+    operator = ""
 
-        self.value = value
-        print(self.value + " from logic file")
-
-        self.total = 0
-        self.raw_first_number = ""
-        self.raw_second_number = ""
-        self.int_first_number = 0
-        self.int_second_number = 0
-        self.operator = ""
+    def __init__(self, btn_value):
+        self.btn_value = btn_value
 
         #  ----------------  Operator  ---------------- #
         #  Check if the value is an operator
-        #  if it is, call the operator class
-        if self.value == "/" or self.value == "*" or self.value == "-" or self.value == "+":
-            Operators(self.value)
+        if self.btn_value == "/" or self.btn_value == "*" or self.btn_value == "-" or self.btn_value == "+":
+            if Logic.operator == "":
+                Logic.operator = self.btn_value
+                print("Operator: " + Logic.operator)
 
         #  -----------------  Number  ----------------- #
         #  Check if value is a number with regex
-        #  if it is, call the Numbers class
-        if bool(re.search(r'\d', self.value)):
-            Numbers(self.value)
+        if bool(re.search(r'\d', self.btn_value)):
+            if Logic.operator == "":
+                Logic.raw_first_number += self.btn_value
+                Logic.int_first_number = float(Logic.raw_first_number)
+                print(Logic.raw_first_number + " raw\n" + str(Logic.int_first_number) + " int")
+            else:
+                Logic.raw_second_number += self.btn_value
+                Logic.int_second_number = float(Logic.raw_second_number)
+                print(Logic.raw_second_number + " raw\n" + str(Logic.int_second_number) + " int")
 
         #  --------------  Special Character  -------------- #
         #  If value is not a number or an operator
         #  it must be a special character, and it will be handled here
-
-        if self.value == "=":
-            if self.operator == "+":
-                self.total = self.int_first_number + self.int_second_number
-            elif self.operator == "-":
-                self.total = self.int_first_number - self.int_second_number
-            elif self.operator == "*":
-                self.total = self.int_first_number * self.int_second_number
-            elif self.operator == "/":
-                self.total = self.int_first_number / self.int_second_number
-
-        if self.value == "AC":
-            self.raw_first_number = ""
-            self.raw_second_number = ""
-            self.int_first_number = 0
-            self.int_second_number = 0
-            self.operator = ""
-            self.total = 0
-
+        if self.btn_value == "=" and Logic.raw_second_number != "":
+            if Logic.operator == "+":
+                Logic.total = Logic.int_first_number + Logic.int_second_number
+            elif Logic.operator == "-":
+                Logic.total = Logic.int_first_number - Logic.int_second_number
+            elif Logic.operator == "*":
+                Logic.total = Logic.int_first_number * Logic.int_second_number
+            elif Logic.operator == "/":
+                Logic.total = Logic.int_first_number / Logic.int_second_number
+            print(Logic.total)
+        #  Reset all variables
+        if self.btn_value == "AC":
+            Logic.raw_first_number = ""
+            Logic.raw_second_number = ""
+            Logic.int_first_number = 0
+            Logic.int_second_number = 0
+            Logic.operator = ""
+            Logic.total = 0
             print("Cleared all values")
-
-        if self.value == "+/-":
-            print("Toggle +/")
-
-        if self.value == ".":
-            print("Add decimal point")
-
-        if self.value == "%":
-            print("Add percentage")
+        #  Change the sign of the first number
+        if self.btn_value == "+/-":
+            if Logic.operator == "":
+                Logic.int_first_number = Logic.int_first_number * -1
+            else:
+                Logic.int_second_number = Logic.int_second_number * -1
+        #  Add a decimal point to the first number or the second number
+        if self.btn_value == ".":
+            if Logic.raw_second_number == "" and Logic.raw_first_number != "":
+                Logic.raw_first_number = Logic.raw_first_number + "."
+                print("First number: " + Logic.raw_first_number)
+            elif Logic.raw_second_number != "":
+                Logic.raw_second_number = Logic.raw_second_number + "."
+                print("Second number: " + Logic.raw_second_number)
+        #  Get the percentage of the first number to define the second number
+        if self.btn_value == "%":
+            if Logic.raw_second_number != "":
+                Logic.int_second_number = Logic.int_first_number * (Logic.int_second_number / 100)
+                print("Second number: " + str(Logic.int_second_number))
